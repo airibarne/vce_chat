@@ -2,7 +2,7 @@
 /*  -------  Server Connection  -------  */
 /*  -----------------------------------  */
 var server = new SillyClient();
-var room = "ECV";
+var room = "a_ecv";
 server.connect("ecv-esup.s.upf.edu:9000", room);
 
 server.on_ready = function () {
@@ -18,6 +18,7 @@ var msg = document.querySelector('.messages')
 var textInput = document.querySelector('.message-input textarea');
 var submitBtn = document.querySelector('.submit');
 var msgList = document.querySelector('.messages ul');
+//var roomInput = document.querySelector('.room-name');
 
 /*  --------  Screen Message  --------  */
 appendMessage = function(message,who) {
@@ -66,3 +67,7 @@ onEnter = function(e) {
     }
 }
 textInput.addEventListener('keydown', onEnter);
+
+server.on_room_info = function (info) {
+    console.log(info);
+}
