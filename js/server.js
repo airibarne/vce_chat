@@ -2,7 +2,6 @@ var serverUrl = "tamats.com:55000";
 var roomPrefix = "1412312_";
 
 var msgSent = new Event('msgSent');
-var roomMetaUpdate = new Event('roomMetaUpdate');
 
 class Network {
     constructor() {

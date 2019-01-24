@@ -325,7 +325,6 @@ cnvBtn.addEventListener("click", function() {
 	if (msgList.classList.contains("hidden")) {
 		hideCanvas();
 	} else {
-		console.log("show canvas");
 		showCanvas();
 	}
 	canvasx = cnv.getBoundingClientRect().x;
@@ -407,10 +406,6 @@ newRoom.addEventListener("click",function() {
 		appendRoom(room);	
 		network.broadcastNewRoom(room.name);
 	}
-});
-
-document.addEventListener('roomMetaUpdate',function () {
-	console.log(network.rooms[network.activeRoom].info);
 });
 
 window.onbeforeunload = function() {
