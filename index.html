@@ -1,32 +1,100 @@
 <!DOCTYPE html>
 <html lang="en" >
-	<head>
-		<meta charset="UTF-8">
-		<title>ECV - Chat</title>
-		<link rel="stylesheet" href="styles/reset.min.css">
-		<link rel='stylesheet' href='styles/font-awesome.min.css'>
-		<link href='styles/main.css' rel='stylesheet' type='text/css'>
-	</head>
-	<body>
-	<div id="frame">
-		<div class="content">
-			<div contentEditable=true class="room-name">
-				<p>ECV - Chat</p>
-			</div>
-			<div class="messages">
-				<ul>
-				<!-- messages will be displayed here -->	
-				</ul>
-			</div>
-			<div class="message-input">
-				<div class="wrap">
-				<textarea id="textInput" type="text" placeholder="Write your message..."></textarea>
-				<button class="submit"><i class="fa fa-paper-plane" aria-hidden="true"></i></button>
+
+<head>
+	<meta charset="UTF-8">
+	<title>Chat</title>
+	<!-- <link href='https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,600,700,300' rel='stylesheet' type='text/css'> -->
+	<link href='css/source-sans-pro.css' rel='stylesheet' type='text/css'>
+	<!-- <script src="https://use.typekit.net/hoy3lrg.js"></script> -->
+	<script src="js/hoy3lrg.js"></script>
+	<script>try{Typekit.load({ async: true });}catch(e){}</script>
+	<!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css"> -->
+	<link rel="stylesheet" href="css/reset.min.css">
+	<!-- <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.2/css/font-awesome.min.css'> -->
+  	<link rel='stylesheet' href='css/font-awesome.min.css'>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+
+  <!-- 
+
+A concept for a chat interface. 
+
+Try writing a new message! :)
+
+
+Follow me here:
+Twitter: https://twitter.com/thatguyemil
+Codepen: https://codepen.io/emilcarlsson/
+Website: http://emilcarlsson.se/
+
+-->
+
+<div id="frame">
+	<div id="sidepanel">
+		<div id="profile">
+			<div class="wrap">
+				<!-- <img id="profile-img" src="img/mikeross.png" class="online" alt="" /> -->
+				<i id="profile-img" class="online fa fa-user"></i>
+				<p contenteditable="true" spellcheck="false">Anon</p>
+				<i class="fa fa-chevron-down expand-button" aria-hidden="true"></i>
+				<div id="status-options">
+					<ul>
+						<li id="status-online" class="active"><span class="status-circle"></span> <p>Online</p></li>
+						<li id="status-away"><span class="status-circle"></span> <p>Away</p></li>
+						<li id="status-busy"><span class="status-circle"></span> <p>Busy</p></li>
+						<li id="status-offline"><span class="status-circle"></span> <p>Offline</p></li>
+					</ul>
+				</div>
+				<div id="expanded">
+					<label for="twitter"><i class="fa fa-facebook fa-fw" aria-hidden="true"></i></label>
+					<input name="twitter" type="text" spellcheck="false" value="mikeross" />
+					<label for="twitter"><i class="fa fa-twitter fa-fw" aria-hidden="true"></i></label>
+					<input name="twitter" type="text" spellcheck="false" value="ross81" />
+					<label for="twitter"><i class="fa fa-instagram fa-fw" aria-hidden="true"></i></label>
+					<input name="twitter" type="text" spellcheck="false" value="mike.ross" />
 				</div>
 			</div>
 		</div>
-    </div>
-    <script src="scripts/sillyclient.js"></script>
-	<script src="scripts/main.js"></script>
-	</body>
+		<div class = "separate"></div>
+		<div id="rooms" class="contacts">
+			<ul></ul>
+		</div>
+		<div id="users" class="contacts" style="display:none;">
+			<ul></ul>
+		</div>
+		<div class = "separate"></div>
+		<div id="bottom-bar">
+			<div id="switchRoom" class="switcher active"><span>Rooms</span></div><div id="switchUser" class="switcher"><span>Users</span></div>
+		</div>
+	</div>
+	<div class="content">
+		<div class="contact-profile">
+			<i class="fa fa-joomla" aria-hidden="true"></i>
+			<p spellcheck="false"></p>
+			<div class="social-media">
+				<i id="volBtn" class="fa fa-volume-off" aria-hidden="true"></i>
+				<i id="cnvBtn" class="fa fa-paint-brush" aria-hidden="true"></i>
+				<i id="outBtn" class="fa fa-sign-out" aria-hidden="true"></i>
+				<i id="eraseBtn" class="fa fa-eraser" aria-hidden="true"></i>
+			</div>
+		</div>
+		<div class="messages">
+			<ul></ul>
+			<canvas class="hidden"></canvas>
+		</div>
+		<div class="message-input">
+			<div class="wrap">
+				<textarea id="textInput" type="text" placeholder="Write your message..."></textarea>
+				<button class="submit"><i class="fa fa-paper-plane" aria-hidden="true"></i></button>
+			</div>
+		</div>
+	</div>
+</div>
+  	<script src='js/sillyclient.js'></script>
+	<script src='js/server.js'></script>
+	<script src="js/index.js"></script>
+</body>
 </html>
