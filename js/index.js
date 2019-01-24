@@ -130,7 +130,11 @@ appendRoom = function(room) {
 	var icon = document.createElement("i");
 	icon.className = "fa fa-joomla";
 	var status = document.createElement("span");
-	status.className = "contact-status online";
+	if(room.offline) {
+		status.className = "contact-status busy";
+	} else {
+		status.className = "contact-status online";
+	}
 	info.appendChild(name);
 	info.appendChild(prev);
 
@@ -164,7 +168,15 @@ appendRoom = function(room) {
 		}
 		network.activeRoom = room.id;
 		clearMessages();
-		appendHist(network.rooms[room.id].history);
+		if (room.offline) {
+			// it is a new room!!!
+			network.connect(room);
+			// and now we're connected!!
+			status.classList.remove("busy");
+			status.classList.add("online");
+		} else {
+			appendHist(network.rooms[room.id].history); // on click hist append
+		}
 	});
 
 	var ul = document.querySelector(".contacts>ul");

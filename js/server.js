@@ -41,7 +41,9 @@ class Network {
             } else if (msgObj.type=="hist") {
                 var histObj = JSON.parse(msgObj.text);
                 room.history = histObj;
-                appendHist(histObj);
+                if (room.id==that.activeRoom) {
+                    appendHist(histObj); // on reload hist append
+                }
             } else if (msgObj.type=="new_room") {
                 that.roomListUpdate(msgObj.text);
             }
@@ -101,7 +103,8 @@ class Network {
     }
     roomListUpdate(room_name) {
         var new_room = new Room(room_name);
-        console.log(new_room.id);
+        new_room.offline = true;
+        appendRoom(new_room);
     }
 }
 
