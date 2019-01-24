@@ -2,7 +2,9 @@ var profImg = document.querySelector('#profile-img');
 var statOpt = document.querySelector('#status-options');
 var profile = document.querySelector('#profile');
 var chrooms = document.querySelector('.contacts');
-var roomTtl = document.querySelector('.content .contact-profile p');
+var roomTtl = document.querySelector('.content .contact-profile>p');
+var usrList = document.querySelector('#user-list');
+var roomImg = document.querySelector('.fa.fa-info-circle');
 
 // network init
 var network = new Network();
@@ -115,29 +117,10 @@ switchUser.addEventListener("click", function () {
 
 });
 
-// // var oldName
-// roomTtl.addEventListener("click",function () {
-// 	if (this.contentEditable=="true") {
-// 		// oldName = roomTtl.innerText;
-// 		onClickSelection(this);
-// 	}
-// });
-// roomTtl.addEventListener("keydown", function (e) {
-// 	var charCode = (e.which) ? e.which : e.keyCode
-//     if (charCode == 13) { // enter key
-// 		e.preventDefault();
-// 		window.getSelection().removeAllRanges();
-// 		network.nick = userNickname.innerText;
-//     }
-// });
-// roomTtl.addEventListener("focusout", function (e) {
-// 	network.nick = userNickname.innerText;
-// });
-
-appendRoom = function(roomName,roomID,isActive) {
+appendRoom = function(room) {
 	var name = document.createElement("p");
 	name.classList.add("name");
-	name.innerText = roomName;
+	name.innerText = room.screenName;
 	var prev = document.createElement("p");
 	prev.classList.add("preview");
 	prev.innerText = "Lorem Ipsum";
@@ -159,29 +142,19 @@ appendRoom = function(roomName,roomID,isActive) {
 
 	var contact = document.createElement("li");
 	contact.classList.add("contact");
-	contact.id = roomID;
-	if (isActive) {
+	contact.id = room.id;
+	if (room.is_active) {
 		contact.classList.add("active");
-		roomTtl.innerText = roomName;
-		// if (network.rooms[roomID].isProtected) {
-		// 	roomTtl.contentEditable = false;
-		// } else {
-		// 	roomTtl.contentEditable = true;
-		// }
+		roomTtl.innerText = room.screenName;
 	}
 	contact.appendChild(wrap);
 	contact.addEventListener("click", function () {
 		var rooms = document.querySelectorAll(".contacts .contact");
-		for (room of rooms) {
-			room.classList.remove("active");
+		for (caca of rooms) {
+			caca.classList.remove("active");
 		}
 		this.classList.add("active");
-		roomTtl.innerText = roomName;
-		// if (network.rooms[roomID].isProtected) {
-		// 	roomTtl.contentEditable = false;
-		// } else {
-		// 	roomTtl.contentEditable = true;
-		// }
+		roomTtl.innerText = room.screenName;
 		if (msgList.classList.contains("hidden")) {
 			cnv.classList.add("hidden");
 			msgList.classList.remove("hidden");
@@ -189,16 +162,46 @@ appendRoom = function(roomName,roomID,isActive) {
 			cnvBtn.classList.remove("fa-comments");
 			cnvBtn.classList.add("fa-paint-brush");
 		}
-		network.activeRoom = roomID;
+		network.activeRoom = room.id;
 		clearMessages();
-		appendHist(network.rooms[roomID].history);
+		appendHist(network.rooms[room.id].history);
 	});
 
 	var ul = document.querySelector(".contacts>ul");
 	ul.appendChild(contact);
 }
-/*  ----------  Room Info   -----------  */
 
+/*  ----------  Room Info   -----------  */
+userListUI = function (users) {
+	var ul = document.createElement("ul");
+	for (var user in users) {
+		var li = document.createElement("li");
+		var i = document.createElement("i");
+		var p = document.createElement("p");
+		i.className = "fa fa-user";
+		if (user == network.rooms[network.activeRoom].me) {
+			p.innerText = "Me";
+			i.style.color = "#6A40C2";
+		} else {
+			p.innerText = "User " + user;
+		}
+		li.appendChild(i);
+		li.appendChild(p);
+		ul.appendChild(li);
+	}
+	return ul;
+}
+roomImg.addEventListener("click", function () {
+	if (!usrList.classList.contains("active")) {
+		var users = network.rooms[network.activeRoom].users;
+		var ul = userListUI(users);
+		usrList.append(ul);
+	} else {
+		var ul = usrList.querySelector("ul");
+		usrList.removeChild(ul);
+	}
+	usrList.classList.toggle("active");
+}, false);
 
 /*  -----------------------------------  */
 /*  ------  Message Interaction  ------  */
@@ -210,6 +213,7 @@ var submitBtn = document.querySelector('.submit');
 var msgList = document.querySelector('.messages ul');
 var volBtn = document.querySelector("#volBtn");
 var sentAudio = new Audio('mp3/your-turn.mp3');
+var receivedAudion = new Audio('mp3/all-eyes-on-me.mp3');
 
 /*  --------  Volume Control --------  */
 volume = false;
@@ -264,7 +268,7 @@ appendHist = function (hist) {
 document.addEventListener("msgSent", function() {
 	textInput.value = "";
 	if (volume) {sentAudio.play();}
-})
+});
 submitBtn.addEventListener("click",function () {
 	network.sendMessage(textInput.value);
 });
@@ -369,18 +373,33 @@ cnv.addEventListener("mousemove", function(e) {
 });
 
 
-// every user is connected to general on login
-newRoom = new Room("general",true);
-roomName = network.connect(newRoom);
-appendRoom(newRoom.screenName,newRoom.id,true);
+// ROOM LOGINS 
+var room = new Room("general",true);
+network.connect(room);
+appendRoom(room);
 
-newRoom = new Room("test",false);
-roomName = network.connect(newRoom);
-appendRoom(newRoom.screenName,newRoom.id,false);
+room = new Room("random",false);
+network.connect(room);
+appendRoom(room);
+
+// Proof of Concept of creating rooms
+// and that rooms being "joinable" by others
+// the plus button below the room list adds a room with the name
+// test_####, where #### is the user id in the active room.
+var newRoom = document.querySelector("#newRoom>i")
+newRoom.addEventListener("click",function() {
+	var name = "test_"+network.rooms[network.activeRoom].me;
+	var room = new Room(name,false);
+	if (!network.rooms.hasOwnProperty(room.id)) {//prevent duplicates
+		network.connect(room);
+		appendRoom(room);	
+		network.broadcastNewRoom(room.name);
+	}
+});
 
 document.addEventListener('roomMetaUpdate',function () {
 	console.log(network.rooms[network.activeRoom].info);
-})
+});
 
 window.onbeforeunload = function() {
 	network.disconnect();

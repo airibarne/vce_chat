@@ -45,7 +45,6 @@ Website: http://emilcarlsson.se/
 						<li id="status-online" class="active"><span class="status-circle"></span> <p>Online</p></li>
 						<li id="status-away"><span class="status-circle"></span> <p>Away</p></li>
 						<li id="status-busy"><span class="status-circle"></span> <p>Busy</p></li>
-						<li id="status-offline"><span class="status-circle"></span> <p>Offline</p></li>
 					</ul>
 				</div>
 				<div id="expanded">
@@ -61,24 +60,35 @@ Website: http://emilcarlsson.se/
 		<div class = "separate"></div>
 		<div id="rooms" class="contacts">
 			<ul></ul>
+			<p id="newRoom"><i class="fa fa-plus-circle"></i></p>
 		</div>
 		<div id="users" class="contacts" style="display:none;">
 			<ul></ul>
 		</div>
 		<div class = "separate"></div>
 		<div id="bottom-bar">
-			<div id="switchRoom" class="switcher active"><span>Rooms</span></div><div id="switchUser" class="switcher"><span>Users</span></div>
+			<div id="switchRoom" class="switcher active">
+				<span>Rooms</span>
+			</div><div id="switchUser" class="switcher">
+				<span>Users</span>
+			</div>
 		</div>
 	</div>
 	<div class="content">
 		<div class="contact-profile">
-			<i class="fa fa-joomla" aria-hidden="true"></i>
 			<p spellcheck="false"></p>
 			<div class="social-media">
+				<i id="infoBtn" class="fa fa-info-circle" aria-hidden="true"></i>
 				<i id="volBtn" class="fa fa-volume-off" aria-hidden="true"></i>
 				<i id="cnvBtn" class="fa fa-paint-brush" aria-hidden="true"></i>
 				<i id="outBtn" class="fa fa-sign-out" aria-hidden="true"></i>
 				<i id="eraseBtn" class="fa fa-eraser" aria-hidden="true"></i>
+			</div>
+			<div id="user-list">
+				<!-- <ul>
+					<li id="status-online" class="active"><i class="online fa fa-user"></i> <p>Online</p></li>
+					<li id="status-away"><i class="online fa fa-user"></i> <p>Away</p></li>
+				</ul> -->
 			</div>
 		</div>
 		<div class="messages">

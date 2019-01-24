@@ -287,6 +287,7 @@ body {
 #frame #sidepanel #profile .wrap #status-options ul li#status-offline.active span.status-circle:before {
   border: 1px solid #95a5a6;
 }
+
 #frame #sidepanel #profile .wrap #expanded {
   padding: 100px 0 0 0;
   display: block;
@@ -580,16 +581,17 @@ body {
   position: absolute;
   text-align: center;
   background: #2E2D32;
-  font-size: 25px;
-  color: #cacaca
+  font-size: 24px;
+  color: #cacaca;
+  cursor: pointer;
 }
-#frame .content .contact-profile p {
+#frame .content .contact-profile>p {
   text-align: center;
   margin: 20px;
   font-size: 26px;
   outline: none;
 }
-#frame .content .contact-profile p::selection {
+#frame .content .contact-profile>p::selection {
   background: #6d6b75;
 }
 #frame .content .contact-profile .social-media {
@@ -608,6 +610,127 @@ body {
 #frame .content .contact-profile .social-media i:hover {
   color: #6A40C2;
 }
+
+#frame .content .contact-profile #user-list {
+  position: absolute;
+  right: 0;
+  opacity: 0;
+  visibility: hidden;
+  width: 150px;
+  margin: 0;
+  border-radius: 6px;
+  z-index: 99;
+  line-height: initial;
+  background: #343338;
+  -moz-transition: 0.3s all ease;
+  -o-transition: 0.3s all ease;
+  -webkit-transition: 0.3s all ease;
+  transition: 0.3s all ease;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  max-height: 210px;
+}
+@media screen and (max-width: 735px) {
+  #frame .content .contact-profile #user-list {
+    width: 58px;
+    margin-top: 57px;
+  }
+}
+#frame .content .contact-profile #user-list.active {
+  opacity: 1;
+  visibility: visible;
+  margin: 5px 0 0 0;
+}
+@media screen and (max-width: 735px) {
+  #frame .content .contact-profile #user-list.active {
+    margin-top: 62px;
+  }
+}
+#frame .content .contact-profile #user-list:before {
+  content: '';
+  position: absolute;
+  width: 0;
+  height: 0;
+  border-left: 6px solid transparent;
+  border-right: 6px solid transparent;
+  border-bottom: 8px solid #6A40C2;
+  margin: -8px 0 0 24px;
+}
+@media screen and (max-width: 735px) {
+  #frame .content .contact-profile #user-list:before {
+    margin-left: 23px;
+  }
+}
+#frame .content .contact-profile #user-list ul {
+  overflow: hidden;
+  border-radius: 6px;
+}
+#frame .content .contact-profile #user-list ul li {
+  padding: 10px 0 25px 18px;
+  display: block;
+  cursor: pointer;
+  font-size: 0.9em;
+}
+@media screen and (max-width: 735px) {
+  #frame .content .contact-profile #user-list ul li {
+    padding: 15px 0 35px 22px;
+  }
+}
+#frame .content .contact-profile #user-list ul li:hover {
+  background: #27262B;
+}
+#frame .content .contact-profile #user-list ul li i {
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  line-height: 7px;
+  border-radius: 50%;
+  margin: 5px 0 0 0;
+}
+@media screen and (max-width: 735px) {
+  #frame .content .contact-profile #user-list ul li i {
+    width: 14px;
+    height: 14px;
+  }
+}
+#frame .content .contact-profile #user-list ul li p {
+  padding-left: 12px;
+  float: left;
+  margin-left: 15px;
+  outline: none;
+  min-width: 100px;
+  color: #cacaca;
+}
+@media screen and (max-width: 735px) {
+  #frame .content .contact-profile #user-list ul li p {
+    display: none;
+  }
+}
+#frame .content .contact-profile #user-list ul li#status-online span.status-circle {
+  background: #2ecc71;
+}
+#frame .content .contact-profile #user-list ul li#status-online.active span.status-circle:before {
+  border: 1px solid #2ecc71;
+}
+#frame .content .contact-profile #user-list ul li#status-away span.status-circle {
+  background: #f1c40f;
+}
+#frame .content .contact-profile #user-list ul li#status-away.active span.status-circle:before {
+  border: 1px solid #f1c40f;
+}
+#frame .content .contact-profile #user-list ul li#status-busy span.status-circle {
+  background: #e74c3c;
+}
+#frame .content .contact-profile #user-list ul li#status-busy.active span.status-circle:before {
+  border: 1px solid #e74c3c;
+}
+#frame .content .contact-profile #user-list ul li#status-offline span.status-circle {
+  background: #95a5a6;
+}
+#frame .content .contact-profile #user-list ul li#status-offline.active span.status-circle:before {
+  border: 1px solid #95a5a6;
+}
+
 #eraseBtn {
   position: absolute;
   bottom: 0;
@@ -773,4 +896,12 @@ body {
 }
 #frame .content .message-input .wrap button:focus {
   outline: none;
+}
+
+#newRoom {
+  color: #cacaca;
+  text-align: center;
+  margin-top: 5px;
+  font-size:1.2em;
+  cursor: pointer;
 }
