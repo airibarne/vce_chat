@@ -1,5 +1,5 @@
 var serverUrl = "tamats.com:55000";
-var roomPrefix = "1412312_";
+var roomPrefix = "141213312_";
 
 var msgSent = new Event('msgSent');
 
@@ -53,7 +53,6 @@ class Network {
             server.getRoomInfo(room.id, function(room_info){
                 // update room metadata
                 room.info = room_info;
-                document.dispatchEvent(roomMetaUpdate);
                 // check if I am the oldest
                 var oldestUser = Math.min.apply(null, room_info.clients)
                 // console.log("oldest "+oldestUser);
